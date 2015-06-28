@@ -21,26 +21,50 @@
     You can reach the author at marenhachmann at-sign yahoo.com.
 
 How to use:
-Make sure you have Python 2.7 installed. Also make sure you have the Python module Pillow installed. Put a raster image file (jpg or png) of the picture you want on your book into the directory 'MyPictures', which the program will create for you when it is run for the first time. Make sure you have the permissions to execute scripts in that directory. On the command line, go into the directory where the script is and enter
+Make sure you have Python 2.7 installed. Also make sure you have the Python module Pillow installed. 
+Put a raster image file (jpg or png) of the picture you want on your book into the directory 'MyPictures', 
+which the program will create for you when it is run for the first time. 
+Make sure you have the permissions to execute scripts in that directory. 
+On the command line, go into the directory where the script is and enter
 
 python bookartgenerator.py
 
-Follow the instructions the program gives you. Answer the questions regarding your book. Be sure to have a ruler on hand. To preview the result, look at the file named *-sheets.png. To fold your pattern, follow the instructions in *-pattern.txt.
+Follow the instructions the program gives you. 
+Answer the questions regarding your book. 
+Be sure to have a ruler on hand. 
+To preview the result, look at the file named *-sheets.png. 
+To fold your pattern, follow the instructions in *-pattern.txt.
 
 KNOWN PROBLEMS: 
-- Images with artifacts (like JPG images, or images created by converting from lossy formats) can cause small unfoldable lines. The program will issue a warning if the picture contains very short lines. It is the responsibility of the user to check if this warning is justified or if the short line is intentional. 
+- Images with artifacts (like JPG images, or images created by converting from lossy formats) 
+  can cause small unfoldable lines. The program will issue a warning if the picture contains 
+  very short lines. It is the responsibility of the user to check if this warning is justified 
+  or if the short line is intentional.
 - iteritems is no longer available in Python3
 
 If you make a beautiful object of art, please don't hesitate to send me a picture!'''
 
+#This program is written for Python2.7
 
 from PIL import Image as Pimage
 import os
 
-#This program is written for Python2.7, trying to be compatible to python3, too
+# Choose True, if you want single precision in pattern output, e.g. 2.1 or 5.8.
+# This setting does not affect the preview, so expect your result to 
+# look less detailed than the preview image.
+# Also, know that rounding does not always work as expected, due to
+# floating point math inaccuracies, see 
+# https://docs.python.org/2/tutorial/floatingpoint.html#tut-fp-issues
+# for more info.
+# Choose False for default, double digit precision, e.g. 2.24 or 5.77.
+SINGLE_PRECISION = False
 
 class Book(object):
-    """Represents the book the user wants to use. num_pages= number of pages, first= first page which should be folded, last= last page which should be folded, height= height of book as float""" 
+    """Represents the book the user wants to use. 
+    num_pages= number of pages, 
+    first= first page which should be folded, 
+    last= last page which should be folded, 
+    height= height of book as float""" 
     
     def __init__(self):
         parameters = self.get_parameters()
@@ -329,7 +353,14 @@ the third tells you where you will have to fold the lower corner up.
                 upper_corner = self.final_pattern[column][0]/100.0 
                 lower_corner = self.final_pattern[column][1]/100.0
                 
-                pattern_string += "{pagenum}     {upper_corner}        {lower_corner}\n".format(pagenum = str(pagenum).rjust(6), upper_corner = "{0:.2f}".format(upper_corner).rjust(6), lower_corner = "{0:.2f}".format(lower_corner).rjust(6))
+                if SINGLE_PRECISION == True:
+                    upper_corner = ('%.1f' % round(upper_corner, 1)).rjust(7)
+                    lower_corner = ('%.1f' % round(lower_corner, 1)).rjust(7)
+                else:
+                    upper_corner = ('%.2f' % upper_corner).rjust(6)
+                    lower_corner = ('%.2f' % lower_corner).rjust(6)
+
+                pattern_string += "{pagenum}     {upper}        {lower}\n".format(pagenum = str(pagenum).rjust(6), upper = upper_corner, lower = lower_corner)
             else:
                 pattern_string += "{pagenum}  No folds, or fold back completely.\n".format(pagenum = str(pagenum).rjust(6))
           
