@@ -44,7 +44,11 @@ One of them has the correct aspect ratio, but the width of the single lines vari
 You will be able to control the aspect ratio of the final result by opening your book wider or pushing it more closed.  
 Check if the details are all there and if the alternating page folding pattern creation has worked.  
 To fold your pattern, follow the instructions in the *.txt file.
- 
+
+If you would like to change the precision of the text pattern to single digit, then open the script file and change line 60 ("SINGLE_PRECISION = False") to 
+SINGLE_PRECISION = True
+Read the comment in the lines above that line in the script to know what that means exactly.
+
 If you make a beautiful object of art, please don't hesitate to send me a picture!
 
 Please note the licence (AGPLv3) in the separate file and at the top of the program script.
