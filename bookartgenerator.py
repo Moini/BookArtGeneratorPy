@@ -224,7 +224,7 @@ class MyImage(object):
                 while currentColor == white and y < imageheight:
                     #at the border from black to white set an end marker
                     if colorAbove == black:
-                        end = y+1 # add one to comprise full dark area
+                        end = y-1 # subtract one to comprise full dark area
                         pattern.setdefault(x, []).append((start,end))
                     
                     #increment and prepare for next iteration
