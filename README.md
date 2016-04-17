@@ -11,7 +11,7 @@ To run, it requires Python 2.7 and the PILLOW python module.
 
 I can only debug the program on Linux, so if you have difficulties on Windows, you will need to help with debugging.
 
-NOTE: If you would like to use an even more improved, javascript-based online version, then go visit http://vektorrascheln.de/bookart.html
+NOTE: If you would like to use an even more improved, JavaScript-based online version, then go visit http://vektorrascheln.de/bookart.html
 
 ##How to use:
 Make sure you have Python 2.7 and PILLOW installed.
